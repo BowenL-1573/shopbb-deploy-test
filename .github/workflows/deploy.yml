@@ -1,0 +1,39 @@
+name: Deploy storefront
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install --no-frozen-lockfile
+
+      - name: Deploy
+        env:
+          SHOPBB_DEPLOY_TOKEN: ${{ secrets.SHOPBB_DEPLOY_TOKEN }}
+          SHOPBB_DEPLOY_JSON_OUT: ${{ runner.temp }}/shopbb-deploy.json
+        run: |
+          npx -y -p @shopbb/cli@latest shopbb deploy \
+            --env=production \
+            --json-output \
+            --force
+
+      - name: Show result
+        if: always()
+        run: |
+          if [ -f "${{ runner.temp }}/shopbb-deploy.json" ]; then
+            cat "${{ runner.temp }}/shopbb-deploy.json"
+          fi

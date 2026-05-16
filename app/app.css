@@ -1,0 +1,408 @@
+/* =============================================================
+   Shopflare global styles + design tokens
+   ============================================================= */
+
+:root {
+  /* Brand colors */
+  --c-ink: #1a1a1a;
+  --c-ink-2: #525252;
+  --c-muted: #737373;
+  --c-muted-2: #a3a3a3;
+  --c-line: #e5e5e5;
+  --c-line-2: #d4d4d4;
+  --c-bg: #ffffff;
+  --c-bg-soft: #fafafa;
+  --c-bg-soft-2: #f5f5f5;
+  --c-accent: #ea580c;
+  --c-accent-soft: #fff7ed;
+  /* Radii */
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 14px;
+  --r-2xl: 20px;
+  --r-pill: 999px;
+  /* Spacing */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--c-ink);
+  background: var(--c-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+a:hover { color: var(--c-accent); }
+
+button { font-family: inherit; }
+
+h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: 700; letter-spacing: -0.02em; }
+h1 { font-size: clamp(28px, 4vw, 40px); }
+h2 { font-size: clamp(22px, 3vw, 30px); }
+h3 { font-size: 18px; }
+
+p { margin: 0; }
+
+img { max-width: 100%; display: block; }
+
+code, pre { font-family: 'JetBrains Mono', monospace; }
+
+.sf-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--sp-6);
+}
+
+.sf-loading {
+  padding: 80px 24px;
+  text-align: center;
+  color: var(--c-muted-2);
+  font-size: 14px;
+}
+
+.sf-error {
+  padding: 64px 24px;
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+.sf-error-stack {
+  margin-top: 24px;
+  padding: 16px;
+  background: var(--c-bg-soft);
+  border-radius: 8px;
+  font-size: 12px;
+  text-align: left;
+  overflow-x: auto;
+}
+
+/* =============================================================
+   <CartForm> + DiscountSelector 全局样式（来自 helium data-* 钩子）
+   所有用 helium 组件的地方共享
+   ============================================================= */
+
+/* DiscountSelector SSR 占位 */
+[data-discount-selector][data-ssr-placeholder],
+[data-claimable-discount-list][data-ssr-placeholder],
+[data-my-discount-list][data-ssr-placeholder],
+[data-address-list][data-ssr-placeholder],
+[data-address-picker][data-ssr-placeholder] {
+  min-height: 78px;
+  background: var(--c-bg-soft);
+  border: 1px dashed var(--c-line);
+  border-radius: var(--r-xl);
+  animation: ssrPulse 1.4s ease-in-out infinite;
+}
+@keyframes ssrPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.85; }
+}
+
+/* DiscountSelector — applied 卡片 */
+[data-discount-selector] {
+  position: relative;
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  border: 1px solid #fed7aa;
+  border-radius: var(--r-xl);
+  padding: 16px 20px;
+  overflow: hidden;
+}
+[data-discount-selector][data-loading],
+[data-discount-selector][data-no-discount],
+[data-discount-selector][data-unauth] {
+  background: var(--c-bg-soft);
+  border: 1px dashed var(--c-line-2);
+  color: var(--c-muted);
+  font-size: 13.5px;
+}
+
+[data-applied] {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+}
+[data-applied] [data-label] {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em; color: var(--c-accent);
+  background: #fff; padding: 2px 8px;
+  border-radius: var(--r-pill); margin-bottom: 6px;
+}
+[data-applied] [data-title] { display: block; font-size: 16px; font-weight: 700; margin: 2px 0 4px; }
+[data-applied] [data-amount] { display: block; font-size: 14px; font-weight: 600; color: #166534; }
+[data-applied] [data-actions] button {
+  background: #fff; color: var(--c-ink); border: 1px solid #fed7aa;
+  border-radius: var(--r-pill); padding: 7px 16px;
+  font-size: 12.5px; font-weight: 600; cursor: pointer;
+}
+[data-applied] [data-actions] button:hover { background: var(--c-accent); color: #fff; border-color: var(--c-accent); }
+
+[data-empty-applied] { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+[data-empty-applied] [data-label] { font-size: 14px; font-weight: 600; }
+[data-empty-applied] button {
+  background: var(--c-ink); color: #fff; border: none;
+  border-radius: var(--r-pill); padding: 8px 20px;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+}
+
+/* DiscountSelector — sheet drawer */
+[data-discount-picker-overlay] {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+  display: flex; align-items: flex-end; justify-content: center;
+  z-index: 100;
+}
+[data-discount-picker-sheet] {
+  background: #fff; width: 100%; max-width: 560px; max-height: 80vh;
+  border-radius: 20px 20px 0 0;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+[data-sheet-header] {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 22px; border-bottom: 1px solid #f5f5f5;
+  font-size: 16px; font-weight: 700;
+}
+[data-sheet-close] {
+  background: none; border: none; width: 28px; height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 22px; line-height: 1; color: var(--c-muted-2);
+  cursor: pointer; border-radius: 50%;
+}
+[data-sheet-list] { padding: 14px 16px; overflow-y: auto; display: grid; gap: 12px; }
+
+[data-claim-card] {
+  position: relative;
+  display: grid; grid-template-columns: 110px 1fr auto;
+  align-items: center;
+  background: #fff; border: 1.5px solid var(--c-line);
+  border-radius: 12px; padding: 14px 16px 14px 0;
+  cursor: pointer; text-align: left;
+  font-family: inherit;
+  width: 100%;
+}
+[data-claim-card]:hover { border-color: #fdba74; }
+[data-claim-card][data-current] { border-color: var(--c-accent); background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); }
+[data-claim-card]::before {
+  content: '';
+  position: absolute; left: 110px; top: 8px; bottom: 8px; width: 1px;
+  background-image: linear-gradient(to bottom, var(--c-line-2) 50%, transparent 50%);
+  background-size: 1px 6px; background-repeat: repeat-y;
+}
+[data-claim-left] { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px 10px; }
+[data-claim-value] { font-size: 28px; font-weight: 800; color: var(--c-accent); line-height: 1; }
+[data-claim-min] { font-size: 11px; color: var(--c-muted-2); margin-top: 4px; }
+[data-claim-right] { padding: 0 12px 0 16px; min-width: 0; }
+[data-claim-title] { font-size: 14.5px; font-weight: 600; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+[data-claim-code] {
+  display: inline-block; font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 600; color: #c2410c;
+  background: #fff; border: 1px dashed #fed7aa;
+  border-radius: 4px; padding: 2px 7px;
+}
+[data-claim-expiry] { font-size: 11.5px; color: var(--c-muted-2); }
+[data-claim-current-tag] {
+  display: inline-block; padding: 4px 10px;
+  background: var(--c-accent); color: #fff;
+  border-radius: var(--r-pill); font-size: 11px; font-weight: 700;
+}
+
+/* =============================================================
+   全局 UI 升级（W8 polish）
+   ============================================================= */
+
+/* 主 CTA */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 24px; background: var(--c-ink); color: #fff;
+  border: none; border-radius: var(--r-pill);
+  font-size: 14.5px; font-weight: 600; cursor: pointer;
+  font-family: inherit;
+  transition: background 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+.btn:hover:not(:disabled) {
+  background: var(--c-accent); color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px -6px rgba(234, 88, 12, 0.45);
+}
+.btn:active:not(:disabled) { transform: translateY(0); }
+.btn:disabled { background: var(--c-line-2); cursor: not-allowed; transform: none; box-shadow: none; }
+
+.btn-lg { padding: 14px 32px; font-size: 15px; }
+.btn-secondary { background: var(--c-bg-soft); color: var(--c-ink); border: 1px solid var(--c-line); }
+.btn-secondary:hover:not(:disabled) {
+  background: #fff; border-color: var(--c-ink); color: var(--c-ink);
+  transform: translateY(-1px); box-shadow: 0 6px 14px -6px rgba(0,0,0,0.12);
+}
+.btn-ghost { background: transparent; color: var(--c-ink); padding: 10px 18px; }
+.btn-ghost:hover:not(:disabled) { background: var(--c-bg-soft); color: var(--c-accent); transform: none; box-shadow: none; }
+
+/* 卡片基础 */
+.card {
+  background: #fff; border: 1px solid var(--c-line); border-radius: var(--r-xl);
+  padding: var(--sp-6);
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+.card:hover { border-color: var(--c-line-2); box-shadow: 0 6px 24px -12px rgba(0,0,0,0.08); }
+
+/* Input */
+.input, input[type="text"]:not([class]), input[type="email"]:not([class]),
+input[type="password"]:not([class]), input[type="tel"]:not([class]),
+input[type="number"]:not([class]) {
+  width: 100%; padding: 11px 14px; background: #fff;
+  border: 1px solid var(--c-line); border-radius: var(--r-md);
+  font-size: 14.5px; font-family: inherit;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.input:focus, input:focus { outline: none; border-color: var(--c-ink); box-shadow: 0 0 0 3px rgba(26,26,26,0.06); }
+
+/* Toast / banner */
+.banner {
+  display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+  border-radius: var(--r-md); font-size: 14px;
+}
+.banner-info { background: var(--c-bg-soft); color: var(--c-ink); border: 1px solid var(--c-line); }
+.banner-success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+.banner-warn { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+.banner-error { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+/* 浏览态加载占位 */
+.skel {
+  background: linear-gradient(90deg, var(--c-bg-soft) 0%, var(--c-bg-soft-2) 50%, var(--c-bg-soft) 100%);
+  background-size: 200% 100%;
+  border-radius: var(--r-md);
+  animation: skel 1.4s linear infinite;
+}
+@keyframes skel { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+/* 分隔副标题 */
+.kicker {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--c-muted-2);
+}
+
+/* 票券 / Voucher 卡片 — 加 perforated edge 效果用 .voucher */
+.voucher {
+  position: relative;
+  display: flex; align-items: stretch;
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  border: 1px solid #fed7aa;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+}
+.voucher::before, .voucher::after {
+  content: ''; position: absolute; width: 16px; height: 16px;
+  background: var(--c-bg); border-radius: 50%; top: 50%; transform: translateY(-50%);
+}
+.voucher::before { left: -8px; }
+.voucher::after { right: -8px; }
+.voucher-value {
+  flex: 0 0 110px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 18px 12px; color: var(--c-accent);
+  font-size: 26px; font-weight: 800; line-height: 1;
+  border-right: 1.5px dashed #fed7aa;
+}
+.voucher-value small { font-size: 11px; margin-top: 4px; font-weight: 600; color: #c2410c; letter-spacing: 0; }
+.voucher-body { flex: 1; padding: 16px 18px; }
+.voucher-title { font-size: 15px; font-weight: 700; color: var(--c-ink); margin-bottom: 4px; }
+.voucher-meta { font-size: 12px; color: var(--c-muted); }
+.voucher-cta {
+  flex: 0 0 auto; display: flex; align-items: center; padding-right: 16px;
+}
+
+/* ClaimableDiscountList — 公共可领券列表（首页/商品详情共用） */
+[data-claimable-discount-list] { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+[data-claimable-discount-list] [data-claimable-item] {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  border: 1px solid #fed7aa;
+  border-radius: var(--r-xl);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+[data-claimable-discount-list] [data-claimable-item]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px -8px rgba(234, 88, 12, 0.35);
+}
+[data-claimable-item] [data-info] { flex: 1; min-width: 0; }
+[data-claimable-item] [data-title] { font-size: 14px; font-weight: 600; color: var(--c-ink); }
+[data-claimable-item] [data-value] { font-size: 22px; font-weight: 700; color: var(--c-accent); margin-top: 3px; line-height: 1.1; }
+[data-claimable-item] [data-condition] { font-size: 12px; color: var(--c-muted); margin-top: 4px; }
+[data-claimable-item] [data-deadline] { font-size: 11.5px; color: var(--c-muted-2); margin-top: 2px; }
+[data-claimable-item] [data-discount-claim] {
+  padding: 9px 22px; background: var(--c-ink); color: #fff; border: none;
+  border-radius: var(--r-pill); font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
+  transition: background 150ms ease, transform 150ms ease;
+}
+[data-claimable-item] [data-discount-claim]:hover:not(:disabled) { background: var(--c-accent); transform: translateY(-1px); }
+[data-claimable-item] [data-discount-claim][data-claimed],
+[data-claimable-item] [data-discount-claim]:disabled { background: var(--c-line-2); cursor: not-allowed; transform: none; }
+
+/* MyDiscountList — 我的卡包列表（account 页用） */
+[data-my-discount-list] { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+[data-my-discount-list] [data-my-discount-item] {
+  position: relative;
+  display: flex; gap: 16px; align-items: center; justify-content: space-between;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+  border: 1px solid #fed7aa; border-radius: var(--r-xl);
+  min-height: 110px;
+}
+[data-my-discount-list] [data-my-discount-item]::before,
+[data-my-discount-list] [data-my-discount-item]::after {
+  content: ''; position: absolute; width: 14px; height: 14px;
+  background: var(--c-bg); border-radius: 50%;
+  top: 50%; transform: translateY(-50%);
+}
+[data-my-discount-list] [data-my-discount-item]::before { left: -7px; }
+[data-my-discount-list] [data-my-discount-item]::after { right: -7px; }
+[data-my-discount-item][data-expired], [data-my-discount-item][data-used] {
+  background: var(--c-bg-soft); border-color: var(--c-line);
+  filter: grayscale(0.6); opacity: 0.7;
+}
+[data-my-discount-item] [data-info] { flex: 1; min-width: 0; }
+[data-my-discount-item] [data-title] { font-size: 15px; font-weight: 700; color: var(--c-ink); }
+[data-my-discount-item] [data-value] {
+  font-size: 28px; font-weight: 800; color: var(--c-accent);
+  margin-top: 4px; line-height: 1; letter-spacing: -0.02em;
+}
+[data-my-discount-item] [data-condition] { font-size: 12px; color: var(--c-muted); margin-top: 8px; }
+[data-my-discount-item] [data-deadline] { font-size: 11.5px; color: var(--c-muted-2); margin-top: 2px; }
+[data-my-discount-item] [data-code] {
+  flex: 0 0 auto; display: inline-block; padding: 6px 12px;
+  background: #fff; color: #c2410c; border: 1px dashed #fed7aa;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace; font-size: 12.5px; font-weight: 700;
+  letter-spacing: 0.04em;
+}
+[data-my-discount-empty] {
+  padding: 60px 24px; text-align: center; color: var(--c-muted);
+  background: var(--c-bg-soft); border: 1px dashed var(--c-line);
+  border-radius: var(--r-xl); font-size: 14px;
+  grid-column: 1 / -1;
+}
+
+/* 链接动画下划线 */
+.link-anim { position: relative; }
+.link-anim::after {
+  content: ''; position: absolute; left: 0; bottom: -2px;
+  width: 100%; height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: right center;
+  transition: transform 250ms cubic-bezier(.2,.8,.2,1);
+}
+.link-anim:hover::after { transform: scaleX(1); transform-origin: left center; }

@@ -1,0 +1,32 @@
+{
+  "name": "shopflare-storefront",
+  "version": "0.6.0",
+  "private": true,
+  "type": "module",
+  "description": "Shopflare — shopbb demo store, built with @shopbb/helium + React Router v7 framework mode on Cloudflare Workers",
+  "scripts": {
+    "dev": "react-router dev",
+    "build": "react-router build",
+    "typecheck": "react-router typegen && tsc -b --noEmit",
+    "deploy": "react-router build && wrangler deploy --dispatch-namespace=oxygen-storefronts"
+  },
+  "dependencies": {
+    "@shopbb/helium": "^0.7.7",
+    "isbot": "^5.1.36",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "react-router": "^7.15.1"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.29.1",
+    "@cloudflare/workers-types": "^4.20240117.0",
+    "@react-router/dev": "^7.15.1",
+    "@react-router/fs-routes": "^7.15.1",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5.3.3",
+    "vite": "^7.0.0",
+    "vite-tsconfig-paths": "^6.1.1",
+    "wrangler": "^4.0.0"
+  }
+}

@@ -1,0 +1,14 @@
+name = "shopflare-storefront"
+main = "workers/app.ts"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+# 部署到 WfP dispatch namespace，由 gateway 转发进来
+# deploy: react-router build && wrangler deploy --dispatch-namespace=oxygen-storefronts
+
+[assets]
+binding = "ASSETS"
+directory = "build/client"
+
+[observability]
+enabled = true
